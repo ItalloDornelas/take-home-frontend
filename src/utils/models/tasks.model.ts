@@ -1,7 +1,13 @@
 export interface Tasks {
   id: string;
   title: string;
-  isCompleted: boolean;
+  completed: boolean;
+  color: string;
+}
+
+export interface TasksCreateOrUpdate {
+  title: string;
+  completed: boolean;
   color: string;
 }
 

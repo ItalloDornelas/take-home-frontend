@@ -5,12 +5,15 @@ export const Card = ({ tasks }: TasksCard) => {
   return (
     <>
       {tasks.map((task) => {
+        const color = task.color ? task.color : "#333333";
         return (
           <div
             key={task.id}
-            className={`flex items-center p-4 rounded-lg shadow ${
-              task.color && "border"
-            } border-[${task.color}]  mt-8 justify-between bg-[#333333]`}
+            className="flex items-center p-4 rounded-lg shadow mt-8 justify-between bg-[#333333]"
+            style={{
+              borderColor: color,
+              borderWidth: task.color ? "1px" : "0px",
+            }}
           >
             <div className="flex items-center">
               <input

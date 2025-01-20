@@ -15,37 +15,50 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { onSubimitRequest } from "./request";
+import { redirect } from "next/navigation";
 
 const FormSchema = z.object({
   title: z
     .string({ required_error: "Mandatory title" })
     .min(1, { message: "Mandatory title" }),
-  color: z.string(),
 });
 
 export const InputForm = () => {
   const [validation, setValidation] = useState({
     errorMessage: "",
   });
+  const [color, setColor] = useState("");
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       title: "",
-      color: "",
     },
   });
 
-  const onSubmit = (formData: FormData) => {
-    const contactFormData = Object.fromEntries(formData);
-    const validatedContactFormData = FormSchema.safeParse(contactFormData);
-    console.log(contactFormData, "contactFormData");
-    if (!validatedContactFormData.success) {
-      const formFieldErrors =
-        validatedContactFormData.error.flatten().fieldErrors;
-      const errorMessage = Object.values(formFieldErrors)[0]?.[0];
-      setValidation({ errorMessage });
+  form.watch((data) => {
+    if (data.title) {
+      setValidation({ errorMessage: "" });
     }
+  });
+
+  const onSubmit = async (formData: FormData) => {
+    const title = formData.get("title") as string;
+    if (title.trim() === "") {
+      setValidation({ errorMessage: "Mandatory title" });
+      return;
+    }
+    const task = {
+      title,
+      color,
+      completed: false,
+    };
+    const responseSubimition = await onSubimitRequest(task);
+    toast({
+      title: responseSubimition.message,
+    });
+    if (responseSubimition.success) redirect("/");
   };
 
   const colors = [
@@ -82,29 +95,25 @@ export const InputForm = () => {
                 </FormItem>
               )}
             />
+
             {validation.errorMessage && (
               <p className="text-red-500">{validation.errorMessage}</p>
             )}
           </div>
-          <FormField
-            control={form.control}
-            name="color"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-[#4EA8DE]">Color</FormLabel>
-                <div className="flex gap-4">
-                  {colors.map((color) => (
-                    <div
-                      key={color}
-                      className="w-[52px] h-[52px] rounded-full cursor-pointer"
-                      style={{ backgroundColor: color }}
-                      {...field}
-                    />
-                  ))}
-                </div>
-              </FormItem>
-            )}
-          />
+          <FormItem>
+            <FormLabel className="text-[#4EA8DE]">Color</FormLabel>
+            <div className="flex gap-4">
+              {colors.map((color) => (
+                <button
+                  type="button"
+                  key={color}
+                  className="w-[52px] h-[52px] rounded-full cursor-pointer"
+                  style={{ backgroundColor: color }}
+                  onClick={() => setColor(color)}
+                />
+              ))}
+            </div>
+          </FormItem>
 
           <Button type="submit">Add Task</Button>
         </form>

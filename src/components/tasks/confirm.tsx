@@ -13,10 +13,13 @@ import { TaskConfirmDelete } from "@/utils/models/tasks.model";
 export const Confirm = ({ children, id }: TaskConfirmDelete) => {
   const handleDelete = async () => {
     "use server";
-    const response = await fetch("http://localhost:3001/tasks/" + id, {
-      method: "DELETE",
-    });
-    console.log(response, "RESPONSE");
+    try {
+      await fetch("http://localhost:3001/tasks/" + id, {
+        method: "DELETE",
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -30,14 +33,18 @@ export const Confirm = ({ children, id }: TaskConfirmDelete) => {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="sm:justify-end">
-          <DialogClose asChild>
-            <button onClick={handleDelete} className="text-red-500 p-4">
-              Confirm
-            </button>
-          </DialogClose>
-          <DialogClose asChild>
-            <button className="text-[#333333] p-4">Cancel</button>
-          </DialogClose>
+          <form action={handleDelete}>
+            <DialogClose asChild>
+              <button type="submit" className="text-red-500 p-2">
+                Confirm
+              </button>
+            </DialogClose>
+            <DialogClose asChild>
+              <button type="button" className="text-[#333333] p-2">
+                Cancel
+              </button>
+            </DialogClose>
+          </form>
         </DialogFooter>
       </DialogContent>
     </Dialog>
