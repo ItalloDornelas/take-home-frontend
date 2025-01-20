@@ -1,4 +1,4 @@
-export interface Tasks {
+export interface Task {
   id: string;
   title: string;
   completed: boolean;
@@ -17,10 +17,10 @@ export interface TasksStatusBar {
 }
 
 export interface TasksCard {
-  tasks: Tasks[];
+  tasks: Task[];
 }
 
 export interface TaskConfirmDelete {
-  id: string;
+  task: Task;
   children: React.ReactNode;
 }

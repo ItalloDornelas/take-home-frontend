@@ -1,9 +1,9 @@
-import { cn } from "@/lib/utils";
+import { LoadingComponent } from "@/components/ui/loading";
 
-export default function Loading({ className }: { className?: string }) {
+export default function Loading() {
   return (
-    <div className={cn("flex justify-center items-center", className)}>
-      <div className="w-6 h-6 border-4 border-t-transparent border-gray-500 rounded-full animate-spin"></div>
+    <div className="flex justify-center items-center">
+      <LoadingComponent />
     </div>
   );
 }

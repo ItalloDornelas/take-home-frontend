@@ -1,4 +1,4 @@
-import { Tasks as TasksType } from "@/utils/models/tasks.model";
+import { Task } from "@/utils/models/tasks.model";
 import { Card } from "./card";
 import { StatusBar } from "./statusBar";
 import { Withdout } from "./without";
@@ -12,9 +12,7 @@ export const Tasks = async () => {
     console.error(error);
   }
 
-  const completedsTasks = tasks.filter(
-    (task: TasksType) => task.completed === true
-  );
+  const completedsTasks = tasks.filter((task: Task) => task.completed === true);
 
   return (
     <>

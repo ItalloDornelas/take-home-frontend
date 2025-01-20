@@ -15,8 +15,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { onSubimitRequest } from "./request";
+import { onSubimitRequest } from "../../../utils/functions/onSubimitRequest";
 import { redirect } from "next/navigation";
+import { LoadingComponent } from "../loading";
 
 const FormSchema = z.object({
   title: z
@@ -28,6 +29,7 @@ export const InputForm = () => {
   const [validation, setValidation] = useState({
     errorMessage: "",
   });
+  const [loading, setLoading] = useState(false);
   const [color, setColor] = useState("");
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -44,9 +46,11 @@ export const InputForm = () => {
   });
 
   const onSubmit = async (formData: FormData) => {
+    setLoading(true);
     const title = formData.get("title") as string;
     if (title.trim() === "") {
       setValidation({ errorMessage: "Mandatory title" });
+      setLoading(false);
       return;
     }
     const task = {
@@ -54,11 +58,12 @@ export const InputForm = () => {
       color,
       completed: false,
     };
-    const responseSubimition = await onSubimitRequest(task);
+    const responseSubmitting = await onSubimitRequest(task);
     toast({
-      title: responseSubimition.message,
+      title: responseSubmitting.message,
     });
-    if (responseSubimition.success) redirect("/");
+    if (responseSubmitting.success) redirect("/");
+    else setLoading(false);
   };
 
   const colors = [
@@ -115,7 +120,9 @@ export const InputForm = () => {
             </div>
           </FormItem>
 
-          <Button type="submit">Add Task</Button>
+          <Button type="submit">
+            {loading ? <LoadingComponent /> : "Add Task"}
+          </Button>
         </form>
       </Form>
     </div>

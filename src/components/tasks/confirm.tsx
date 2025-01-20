@@ -1,3 +1,4 @@
+"use client";
 import {
   Dialog,
   DialogClose,
@@ -8,18 +9,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { toast } from "@/hooks/use-toast";
+import { onDeleteRequest } from "@/utils/functions/onDeleteRequest";
 import { TaskConfirmDelete } from "@/utils/models/tasks.model";
 
-export const Confirm = ({ children, id }: TaskConfirmDelete) => {
+export const Confirm = ({ children, task }: TaskConfirmDelete) => {
   const handleDelete = async () => {
-    "use server";
-    try {
-      await fetch("http://localhost:3001/tasks/" + id, {
-        method: "DELETE",
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    const responseSubmitting = await onDeleteRequest(task.id);
+    toast({
+      title: responseSubmitting.message,
+    });
   };
 
   return (
@@ -33,18 +32,14 @@ export const Confirm = ({ children, id }: TaskConfirmDelete) => {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="sm:justify-end">
-          <form action={handleDelete}>
-            <DialogClose asChild>
-              <button type="submit" className="text-red-500 p-2">
-                Confirm
-              </button>
-            </DialogClose>
-            <DialogClose asChild>
-              <button type="button" className="text-[#333333] p-2">
-                Cancel
-              </button>
-            </DialogClose>
-          </form>
+          <DialogClose asChild>
+            <button onClick={handleDelete} className="text-red-500 p-2">
+              Confirm
+            </button>
+          </DialogClose>
+          <DialogClose asChild>
+            <button className="text-[#333333] p-2">Cancel</button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>
