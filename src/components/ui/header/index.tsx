@@ -1,9 +1,12 @@
-import { Header as HeaderType } from "@/utils/models/commun.model";
-
+"use client";
 import Image from "next/image";
-import { Button } from "../Button";
+import { Button } from "../button";
+import { usePathname } from "next/navigation";
+import { redirect } from "next/navigation";
 
-export const Header = ({ useButton = true }: HeaderType) => {
+export const Header = () => {
+  const pathname = usePathname();
+  const showButton = pathname.includes("new-or-update") ? false : true;
   return (
     <header className="bg-black w-full py-4 shadow-md h-[200px] relative mb-9">
       <div className="container mx-auto flex justify-center items-center px-4 w-full h-full">
@@ -18,9 +21,12 @@ export const Header = ({ useButton = true }: HeaderType) => {
           <span className="text-[#1E6F9F]">Todo</span> App
         </h1>
       </div>
-      {useButton && (
+      {showButton && (
         <div className="absolute -bottom-16 w-11/12  max-w-4xl px-6 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <Button text="Create Task" />
+          <Button onClick={() => redirect("/new-or-update")}>
+            {" "}
+            Create Task
+          </Button>
         </div>
       )}
     </header>

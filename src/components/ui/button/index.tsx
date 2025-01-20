@@ -1,9 +1,13 @@
-import { Button as ButtonType } from "@/utils/models/commun.model";
-
-export const Button = ({ text }: ButtonType) => {
+export const Button = ({
+  onClick,
+  children,
+}: React.HTMLProps<HTMLButtonElement>) => {
   return (
-    <button className="w-full bg-[#1E6F9F] hover:bg-blue-100 py-2 px-6 mt-8 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300 flex gap-2 justify-center items-center h-[52px]">
-      <span className="text-[14px]">{text}</span>
+    <button
+      onClick={onClick}
+      className="w-full bg-[#1E6F9F] hover:bg-blue-100 py-2 px-6 mt-8 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300 flex gap-2 justify-center items-center h-[52px]"
+    >
+      <span className="text-[14px]">{children}</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
