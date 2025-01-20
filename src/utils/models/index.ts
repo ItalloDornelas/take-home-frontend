@@ -5,3 +5,8 @@ export interface Header {
 export interface Button {
   text: string;
 }
+
+export interface TasksStatus {
+  tasks: number;
+  completed: number;
+}
