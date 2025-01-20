@@ -1,5 +1,5 @@
 import Image from "next/image";
-export const WithdoutTasks = () => {
+export const Withdout = () => {
   return (
     <div className="flex flex-col items-center justify-center mt-8 text-center text-gray-400 p-[64px_24px] gap-4 rounded-t-lg border-t border-gray-400">
       <div className="text-4xl opacity-15">

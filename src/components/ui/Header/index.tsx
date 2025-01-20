@@ -1,4 +1,4 @@
-import { Header as HeaderType } from "@/utils/models";
+import { Header as HeaderType } from "@/utils/models/commun.model";
 
 import Image from "next/image";
 import { Button } from "../Button";

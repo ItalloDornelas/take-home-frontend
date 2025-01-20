@@ -1,4 +1,4 @@
-import { Button as ButtonType } from "@/utils/models";
+import { Button as ButtonType } from "@/utils/models/commun.model";
 
 export const Button = ({ text }: ButtonType) => {
   return (
