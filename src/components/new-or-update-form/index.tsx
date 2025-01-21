@@ -19,7 +19,7 @@ import { onUpdateRequest } from "@/app/api/onUpdateRequest";
 import { redirect } from "next/navigation";
 import { colors } from "@/utils/const/colors";
 import { FormSchema } from "./schema";
-import { onSubimitRequest } from "@/app/api/onSubimitRequest";
+import { onSubmitRequest } from "@/app/api/onSubmitRequest";
 
 export const NewOrUpdateForm = ({ task }: TaskForm) => {
   const [validation, setValidation] = useState({
@@ -54,7 +54,7 @@ export const NewOrUpdateForm = ({ task }: TaskForm) => {
     };
     const responseSubmitting = task
       ? await onUpdateRequest({ ...taskPayload, id: task.id }, true)
-      : await onSubimitRequest(taskPayload);
+      : await onSubmitRequest(taskPayload);
     toast({
       title: responseSubmitting.message,
     });

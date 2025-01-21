@@ -23,6 +23,6 @@ export const onUpdateRequest = async (
     return { message: "Task successfully edited", success: true };
   } catch (error) {
     console.error(error);
-    return { message: "Task editing error", success: false };
+    return { message: "Error editing the task", success: false };
   }
 };

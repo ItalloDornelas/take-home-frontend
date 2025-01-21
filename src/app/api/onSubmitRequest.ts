@@ -3,7 +3,7 @@ import { api } from "@/utils/const/api";
 import { TasksCreateOrUpdate } from "@/utils/models/tasks.model";
 import { revalidatePath } from "next/cache";
 
-export const onSubimitRequest = async (task: TasksCreateOrUpdate) => {
+export const onSubmitRequest = async (task: TasksCreateOrUpdate) => {
   try {
     const resp = await fetch(api.tasks, {
       method: "POST",
