@@ -1,10 +1,11 @@
 "use server";
 import { TasksCreateOrUpdate } from "@/utils/models/tasks.model";
 import { revalidatePath } from "next/cache";
+import { api } from "../const/api";
 
 export const onSubimitRequest = async (task: TasksCreateOrUpdate) => {
   try {
-    const resp = await fetch("http://localhost:3001/tasks", {
+    const resp = await fetch(api.tasks, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

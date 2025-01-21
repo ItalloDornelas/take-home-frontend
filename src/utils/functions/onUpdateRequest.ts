@@ -1,13 +1,14 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { Task } from "../models/tasks.model";
+import { api } from "../const/api";
 
 export const onUpdateRequest = async (
   task: Task,
   noUpdateCompleted = false
 ) => {
   try {
-    const resp = await fetch("http://localhost:3001/tasks/" + task.id, {
+    const resp = await fetch(api.tasks + task.id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

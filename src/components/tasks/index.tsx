@@ -2,11 +2,12 @@ import { Task } from "@/utils/models/tasks.model";
 import { Card } from "./card";
 import { StatusBar } from "./statusBar";
 import { Withdout } from "./without";
+import { api } from "@/utils/const/api";
 
 export const Tasks = async () => {
   let tasks = [];
   try {
-    const response = await fetch("http://localhost:3001/tasks");
+    const response = await fetch(api.tasks);
     tasks = await response.json();
   } catch (error) {
     console.error(error);

@@ -1,9 +1,10 @@
 "use server";
 import { revalidatePath } from "next/cache";
+import { api } from "../const/api";
 
 export const onDeleteRequest = async (id: string) => {
   try {
-    await fetch("http://localhost:3001/tasks/" + id, {
+    await fetch(api.tasks + id, {
       method: "DELETE",
     });
     return { message: "Task deleted successfully", success: true };
