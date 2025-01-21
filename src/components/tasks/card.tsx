@@ -42,11 +42,7 @@ export const Card = ({ tasks }: TasksCard) => {
                 onCheckedChange={() => handleUpdate(task)}
                 className="w-4 h-4 text-blue-600 border-[#4EA8DE] rounded-lg data-[state=checked]:bg-[#5E60CE] data-[state=checked]:border-[#5E60CE]"
               />
-              <p
-                className={`ml-3 text-sm text-gray-900 ${
-                  task.completed && "line-through"
-                }`}
-              >
+              <p className={`ml-3 text-sm ${task.completed && "line-through"}`}>
                 <Link href={`/new-or-update/${task.id}`}>{task.title}</Link>
               </p>
             </div>

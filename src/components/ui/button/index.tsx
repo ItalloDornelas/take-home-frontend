@@ -9,7 +9,7 @@ export const Button = ({
   return (
     <button
       onClick={onClick}
-      className="w-full bg-[#1E6F9F] hover:bg-blue-100 py-2 px-6 mt-8 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300 flex gap-2 justify-center items-center h-[52px]"
+      className="w-full bg-[#1E6F9F] hover:bg-slate-800 py-2 px-6 mt-8 rounded-md focus:outline-none focus:ring-4 focus:ring-blue-300 flex gap-2 justify-center items-center h-[52px]"
     >
       <span className="text-[14px]">{children}</span>
       {useIconUpdate ? <Check size={16} /> : <CirclePlus size={16} />}
