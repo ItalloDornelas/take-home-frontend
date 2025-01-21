@@ -1,6 +1,6 @@
 "use server";
+import { api } from "@/utils/const/api";
 import { revalidatePath } from "next/cache";
-import { api } from "../const/api";
 
 export const onDeleteRequest = async (id: string) => {
   try {

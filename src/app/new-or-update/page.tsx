@@ -1,5 +1,5 @@
 "use client";
-import { InputForm } from "@/components/ui/inputForm";
+import { NewOrUpdateForm } from "@/components/new-or-update-form";
 import { ArrowLeft } from "lucide-react";
 import { redirect } from "next/navigation";
 
@@ -11,7 +11,7 @@ export default function NewOrUpdate() {
         onClick={() => redirect("/")}
         className="cursor-pointer"
       />
-      <InputForm />
+      <NewOrUpdateForm />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 "use server";
-import { InputForm } from "@/components/ui/inputForm";
+import { NewOrUpdateForm } from "@/components/new-or-update-form";
 import { api } from "@/utils/const/api";
 import { Task } from "@/utils/models/tasks.model";
 
@@ -20,7 +20,7 @@ export default async function DetailTask({
 
   return (
     <div className="flex w-full justify-center flex-col gap-6">
-      <InputForm task={task} />
+      <NewOrUpdateForm task={task} />
     </div>
   );
 }

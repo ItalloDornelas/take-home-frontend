@@ -1,4 +1,5 @@
 "use client";
+import { onDeleteRequest } from "@/app/api/onDeleteRequest";
 import {
   Dialog,
   DialogClose,
@@ -10,7 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
-import { onDeleteRequest } from "@/utils/functions/onDeleteRequest";
+
 import { TaskConfirmDelete } from "@/utils/models/tasks.model";
 
 export const Confirm = ({

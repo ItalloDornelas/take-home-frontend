@@ -3,7 +3,7 @@ import { Task, TasksCard } from "@/utils/models/tasks.model";
 import { Confirm } from "./confirm";
 import { Trash2 } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
-import { onUpdateRequest } from "@/utils/functions/onUpdateRequest";
+import { onUpdateRequest } from "@/app/api/onUpdateRequest";
 import { useState } from "react";
 import Link from "next/link";
 

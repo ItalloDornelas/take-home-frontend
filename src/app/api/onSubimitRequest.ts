@@ -1,7 +1,7 @@
 "use server";
+import { api } from "@/utils/const/api";
 import { TasksCreateOrUpdate } from "@/utils/models/tasks.model";
 import { revalidatePath } from "next/cache";
-import { api } from "../const/api";
 
 export const onSubimitRequest = async (task: TasksCreateOrUpdate) => {
   try {

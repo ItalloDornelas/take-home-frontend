@@ -15,19 +15,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { onSubimitRequest } from "../../../utils/functions/onSubimitRequest";
-import { LoadingComponent } from "../loading";
+
+import { LoadingComponent } from "../ui/loading";
 import { TaskForm } from "@/utils/models/tasks.model";
-import { onUpdateRequest } from "@/utils/functions/onUpdateRequest";
+import { onUpdateRequest } from "@/app/api/onUpdateRequest";
 import { redirect } from "next/navigation";
+import { colors } from "@/utils/const/colors";
+import { FormSchema } from "./schema";
+import { onSubimitRequest } from "@/app/api/onSubimitRequest";
 
-const FormSchema = z.object({
-  title: z
-    .string({ required_error: "Mandatory title" })
-    .min(1, { message: "Mandatory title" }),
-});
-
-export const InputForm = ({ task }: TaskForm) => {
+export const NewOrUpdateForm = ({ task }: TaskForm) => {
   const [validation, setValidation] = useState({
     errorMessage: "",
   });
@@ -59,7 +56,7 @@ export const InputForm = ({ task }: TaskForm) => {
     const taskPayload = {
       title,
       color: colorSelected,
-      completed: false,
+      completed: task ? task.completed : false,
     };
     const responseSubmitting = task
       ? await onUpdateRequest({ ...taskPayload, id: task.id }, true)
@@ -73,18 +70,6 @@ export const InputForm = ({ task }: TaskForm) => {
       setIsEditionMode(false);
     }
   };
-
-  const colors = [
-    "#FF3B30",
-    "#FF9500",
-    "#FFCC00",
-    "#34C759",
-    "#007AFF",
-    "#5856D6",
-    "#AF52DE",
-    "#FF2D55",
-    "#A2845E",
-  ];
 
   return (
     <div className="w-full">
