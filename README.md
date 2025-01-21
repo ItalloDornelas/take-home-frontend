@@ -15,6 +15,12 @@ Before running this project, ensure you have the following installed on your mac
 - Node.js (v18 or higher)
 - npm (Node Package Manager) or Yarn
 
+Additionally, you need to provide an `.env` file with the following variable:
+```env
+NEXT_PUBLIC_API_URL=<your_api_url>
+```
+This environment variable is used to configure the base URL for API calls in the application.
+
 ## Getting Started
 
 ### 1. Clone the Repository
@@ -29,14 +35,20 @@ Run the following command to install all required dependencies:
 npm install
 ```
 
-### 3. Run the Development Server
+### 3. Create the `.env` File
+Create a `.env` file in the root of the project and add the required environment variable:
+```env
+NEXT_PUBLIC_API_URL=<your_api_url>
+```
+
+### 4. Run the Development Server
 Start the development server with the following command:
 ```bash
 npm run dev
 ```
 The application will be available at `http://localhost:3000`.
 
-### 4. Build for Production
+### 5. Build for Production
 Generate the production build using:
 ```bash
 npm run build
