@@ -4,15 +4,26 @@ import { Confirm } from "./confirm";
 import { Trash2 } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
 import { onUpdateRequest } from "@/utils/functions/onUpdateRequest";
+import { useState } from "react";
+import Link from "next/link";
 
 export const Card = ({ tasks }: TasksCard) => {
+  const [stateTasks, setStateTasks] = useState<Task[]>(tasks);
+
   const handleUpdate = async (task: Task) => {
+    setStateTasks((prevTasks) =>
+      prevTasks.map((prevTask) =>
+        prevTask.id === task.id
+          ? { ...prevTask, completed: !prevTask.completed }
+          : prevTask
+      )
+    );
     await onUpdateRequest(task);
   };
 
   return (
     <>
-      {tasks.map((task) => {
+      {stateTasks.map((task) => {
         const color = task.color ? task.color : "#333333";
         return (
           <div
@@ -36,10 +47,10 @@ export const Card = ({ tasks }: TasksCard) => {
                   task.completed && "line-through"
                 }`}
               >
-                {task.title}
+                <Link href={`/new-or-update/${task.id}`}>{task.title}</Link>
               </p>
             </div>
-            <Confirm task={task}>
+            <Confirm task={task} setStateTasks={setStateTasks}>
               <button>
                 <Trash2 size={16} />
               </button>

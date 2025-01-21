@@ -16,8 +16,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { onSubimitRequest } from "../../../utils/functions/onSubimitRequest";
-import { redirect } from "next/navigation";
 import { LoadingComponent } from "../loading";
+import { TaskForm } from "@/utils/models/tasks.model";
+import { onUpdateRequest } from "@/utils/functions/onUpdateRequest";
+import { redirect } from "next/navigation";
 
 const FormSchema = z.object({
   title: z
@@ -25,17 +27,18 @@ const FormSchema = z.object({
     .min(1, { message: "Mandatory title" }),
 });
 
-export const InputForm = () => {
+export const InputForm = ({ task }: TaskForm) => {
   const [validation, setValidation] = useState({
     errorMessage: "",
   });
   const [loading, setLoading] = useState(false);
-  const [color, setColor] = useState("");
+  const [isEditionMode, setIsEditionMode] = useState(task ? true : false);
+  const [colorSelected, setColorSelected] = useState(task ? task.color : "");
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      title: "",
+      title: task ? task.title : "",
     },
   });
 
@@ -53,17 +56,22 @@ export const InputForm = () => {
       setLoading(false);
       return;
     }
-    const task = {
+    const taskPayload = {
       title,
-      color,
+      color: colorSelected,
       completed: false,
     };
-    const responseSubmitting = await onSubimitRequest(task);
+    const responseSubmitting = task
+      ? await onUpdateRequest({ ...taskPayload, id: task.id }, true)
+      : await onSubimitRequest(taskPayload);
     toast({
       title: responseSubmitting.message,
     });
     if (responseSubmitting.success) redirect("/");
-    else setLoading(false);
+    else {
+      setLoading(false);
+      setIsEditionMode(false);
+    }
   };
 
   const colors = [
@@ -112,16 +120,24 @@ export const InputForm = () => {
                 <button
                   type="button"
                   key={color}
-                  className="w-[52px] h-[52px] rounded-full cursor-pointer"
+                  className={`w-[52px] h-[52px] rounded-full cursor-pointer ${
+                    color === colorSelected && "border-4 border-white"
+                  }`}
                   style={{ backgroundColor: color }}
-                  onClick={() => setColor(color)}
+                  onClick={() => setColorSelected(color)}
                 />
               ))}
             </div>
           </FormItem>
 
-          <Button type="submit">
-            {loading ? <LoadingComponent /> : "Add Task"}
+          <Button type="submit" useIconUpdate={isEditionMode ? true : false}>
+            {loading ? (
+              <LoadingComponent />
+            ) : isEditionMode ? (
+              "Save"
+            ) : (
+              "Add Task"
+            )}
           </Button>
         </form>
       </Form>

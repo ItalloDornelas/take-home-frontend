@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface Task {
   id: string;
   title: string;
@@ -23,4 +25,9 @@ export interface TasksCard {
 export interface TaskConfirmDelete {
   task: Task;
   children: React.ReactNode;
+  setStateTasks: Dispatch<SetStateAction<Task[]>>;
+}
+
+export interface TaskForm {
+  task?: Task;
 }

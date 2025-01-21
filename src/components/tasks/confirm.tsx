@@ -13,8 +13,13 @@ import { toast } from "@/hooks/use-toast";
 import { onDeleteRequest } from "@/utils/functions/onDeleteRequest";
 import { TaskConfirmDelete } from "@/utils/models/tasks.model";
 
-export const Confirm = ({ children, task }: TaskConfirmDelete) => {
+export const Confirm = ({
+  children,
+  task,
+  setStateTasks,
+}: TaskConfirmDelete) => {
   const handleDelete = async () => {
+    setStateTasks((prevTasks) => prevTasks.filter((t) => t.id !== task.id));
     const responseSubmitting = await onDeleteRequest(task.id);
     toast({
       title: responseSubmitting.message,
