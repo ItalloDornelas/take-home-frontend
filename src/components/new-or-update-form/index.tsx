@@ -1,5 +1,4 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -15,8 +14,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-
-import { LoadingComponent } from "../ui/loading";
 import { TaskForm } from "@/utils/models/tasks.model";
 import { onUpdateRequest } from "@/app/api/onUpdateRequest";
 import { redirect } from "next/navigation";
@@ -28,7 +25,6 @@ export const NewOrUpdateForm = ({ task }: TaskForm) => {
   const [validation, setValidation] = useState({
     errorMessage: "",
   });
-  const [loading, setLoading] = useState(false);
   const [isEditionMode, setIsEditionMode] = useState(task ? true : false);
   const [colorSelected, setColorSelected] = useState(task ? task.color : "");
 
@@ -46,11 +42,9 @@ export const NewOrUpdateForm = ({ task }: TaskForm) => {
   });
 
   const onSubmit = async (formData: FormData) => {
-    setLoading(true);
     const title = formData.get("title") as string;
     if (title.trim() === "") {
       setValidation({ errorMessage: "Mandatory title" });
-      setLoading(false);
       return;
     }
     const taskPayload = {
@@ -65,10 +59,7 @@ export const NewOrUpdateForm = ({ task }: TaskForm) => {
       title: responseSubmitting.message,
     });
     if (responseSubmitting.success) redirect("/");
-    else {
-      setLoading(false);
-      setIsEditionMode(false);
-    }
+    else setIsEditionMode(false);
   };
 
   return (
@@ -116,13 +107,7 @@ export const NewOrUpdateForm = ({ task }: TaskForm) => {
           </FormItem>
 
           <Button type="submit" useIconUpdate={isEditionMode ? true : false}>
-            {loading ? (
-              <LoadingComponent />
-            ) : isEditionMode ? (
-              "Save"
-            ) : (
-              "Add Task"
-            )}
+            {isEditionMode ? "Save" : "Add Task"}
           </Button>
         </form>
       </Form>

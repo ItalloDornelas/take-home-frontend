@@ -18,9 +18,5 @@ export default async function DetailTask({
     console.error(error);
   }
 
-  return (
-    <div className="flex w-full justify-center flex-col gap-6">
-      <NewOrUpdateForm task={task} />
-    </div>
-  );
+  return <NewOrUpdateForm task={task} />;
 }
